@@ -39,8 +39,8 @@ A continuación, relatamos exactamente el problema que buscamos resolver.
 
 ## Descripción del escenario de aplicación
 
-## Materiales requiridos
+## Materiales requeridos
 
-## Perpectivas de capitalización
+## Perspectivas de capitalización
 
 ## Referencias
