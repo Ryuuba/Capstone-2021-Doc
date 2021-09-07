@@ -1,0 +1,9 @@
+{
+    "cSpell.language": "en,es-ES",
+    "cSpell.enabled": true,
+    "editor.wordWrap": "wordWrapColumn",
+    "[markdown]": {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.quickSuggestions": false
+    }
+}
