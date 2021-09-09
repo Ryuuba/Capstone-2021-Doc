@@ -54,10 +54,36 @@ El objetivo general se alcanzará gradualmente, mediante el cumplimiento de los 
 
 ## Justificación
 
+La realización de este proyecto requiere del uso de las tecnologías de la Internet de las Cosas porque su principal función es la monitorización de los niveles de CO<sub>2</sub> en un área cuya extensión haría que el uso de monitores convencionales sea infactible.
+
+Los datos que el sistema capture serán procesados y presentados de tal manera que sea sencillo tomar decisiones sobre qué áreas ventilar y cuándo hacerlo. Asimismo, los visitantes del área de observación podrían decidir si visitar o no uno los lugares específicos a los que se dirigen sin la necesidad de estar ahí presentes.
+
+El sistema de monitorización sería diseñado para que el software del agente, la aplicación web y los sensores remotos puedan ser actualizados.Asimismo, sería necesario dar mantenimiento preventivo y correctivo a los sensores remotos para asegurar que estos están operando correctamente. Estas dos necesidades permitirían seguir obteniendo capital después de que la venta de la red de sensores.
+
 ## Descripción del escenario de aplicación
+
+![Edificio](./fig/building_wsn_CO2.svg "Red de sensores de CO2 desplegada en un edificio.")
 
 ## Materiales requeridos
 
-## Perspectivas de capitalización
+### Software
+
+1. Editor de código fuente VS Code.
+2. Terminal de comandos.
+3. Extensiones de VS Code para programar en C/C++, Arduino C, Java, Python y Markdown.
+4. Compiladores GCC o CLANG.
+5. Kit de desarrollo de Java AdoptOpenJDK o JavaJDK.
+6. Interpreté Python 3.9.
+7. Entorno de desarrollo integrado de Arduino.
+8. Extensiones para trabajar con placas Arduino y ESP.
+9. Editor de programas basados en flujos Node-Red.
+10. Simulador de redes CISCO Packet Tracer (tentativo).
+11. Simulador de redes OMNeT++ (tentativo).
+
+### Hardware
+
+1. Placa de desarrollo ESP32.
+2. Sensor de CO<sub>2</sub>.
+3. Elementos electrónicos (alambres, resistores, capacitores, ledes, tabletas de desarrollo, etc.).
 
 ## Referencias
