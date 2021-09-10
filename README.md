@@ -13,9 +13,9 @@ Este documentos esboza las ideas generales que conllevarían al desarrollo de un
 
 ## Introducción
 
-De acuerdo con estudios recientes (), la COVID-19 es una enfermedad cuyo patógeno se transmite via aerea a través de los aerosoles que expulsamos al hablar, estornudar o toser.
+De acuerdo con estudios recientes (Wang, 2021), la COVID-19 es una enfermedad cuyo patógeno se transmite via aerea a través de los aerosoles que expulsamos al hablar, estornudar o toser.
 
-Con el fin de reducir el número de contagios de esta enfermedad, se han ideado diversas medidas de prevención. En México, por ejemplo, se fomenta el uso de cubrebocas y el control del aforo en lugares cerrados. Actualmente, diversos estudios sugieren que monitorizar la calidad del aire, junto con el siguimiento de las medidas anteriores, ayudaría significativamente en la reducción de contagios.
+Con el fin de reducir el número de contagios de esta enfermedad, se han ideado diversas medidas de prevención. En la Ciudad de México, por ejemplo, se fomenta el uso de cubrebocas y el control del aforo en lugares cerrados (Gobierno de la Ciudad de México, 2021). Actualmente, se sugiere que monitorizar la calidad del aire (Money, 2021) ayudaría en la reducción de contagios.
 
 En el mercado existen diversos monitores de CO<sub>2</sub> que permiten obtener indirectamente una medición de la calidad del aire, siendo el valor de 600 PPM un indicador que sugiere la ventilación del área de observación del dispositivo. 
 
@@ -60,6 +60,8 @@ Los datos que el sistema capture serán procesados y presentados de tal manera q
 
 El sistema de monitorización sería diseñado para que el software del agente, la aplicación web y los sensores remotos puedan ser actualizados.Asimismo, sería necesario dar mantenimiento preventivo y correctivo a los sensores remotos para asegurar que estos están operando correctamente. Estas dos necesidades permitirían seguir obteniendo capital después de que la venta de la red de sensores.
 
+Finalmente, la realización de este proyecto contribuiría al alcance del objetivo tres de la agenda 2030 de los Objetivos de Desarrollo Sostenible de las Naciones Unidas (Naciones Unidas, 2021): «*Garantizar una vida sana y promover el bienestar para todos en todas las edades*». Particularmente, el aporte se haría en el objetivo 3.d «*Reforzar la capacidad de todos los países, en particular los países en desarrollo, en materia de alerta temprana, reducción de riesgos y gestión de los riesgos para la salud nacional y mundial*».
+
 ## Descripción del escenario de aplicación
 
 ![Edificio](./fig/building_wsn_CO2.svg "Red de sensores de CO2 desplegada en un edificio.")
@@ -82,8 +84,17 @@ El sistema de monitorización sería diseñado para que el software del agente, 
 
 ### Hardware
 
-1. Placa de desarrollo ESP32.
-2. Sensor de CO<sub>2</sub>.
+1. Placas de desarrollo ESP32.
+2. Sensores de CO<sub>2</sub>.
 3. Elementos electrónicos (alambres, resistores, capacitores, ledes, tabletas de desarrollo, etc.).
+4. Conmutador de red.
+5. Raspberry Pi.
+6. PC.
 
 ## Referencias
+
+1. Wang, C. C., Prather, K. A., Sznitman, J., Jimenez, J. L., Lakdawala, S. S., Tufekci, Z., & Marr, L. C. (2021). *Airborne transmission of respiratory viruses*. Science (New York, N.Y.), 373(6558), eabd9149. https://doi.org/10.1126/science.abd9149
+2. Gobierno de la Ciudad de México. (2021, julio). *COVID-19 CDMX*. https://www.covid19.cdmx.gob.mx/
+3. Money, C. (2021, septiembre). *https://www.washingtonpost.com/health/2021/02/10/carbon-dioxide-device-coronavirus/*. The Washington Post. https://www.washingtonpost.com/health/2021/02/10/carbon-dioxide-device-coronavirus/
+4. Naciones Unidas. (2021, julio). *Salud - Desarrollo Sostenible*. https://www.un.org/sustainabledevelopment/es/health/
+
