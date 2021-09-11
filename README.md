@@ -85,16 +85,17 @@ Finalmente, la realización de este proyecto contribuiría al alcance del objeti
 ### Hardware
 
 1. Placas de desarrollo ESP32.
-2. Sensores de CO<sub>2</sub>.
-3. Elementos electrónicos (alambres, resistores, capacitores, ledes, tabletas de desarrollo, etc.).
-4. Conmutador de red.
-5. Raspberry Pi.
-6. PC.
+2. Sensores de CO<sub>2</sub> CM1106SL-NS.
+3. Monitor de CO<sub>2</sub> https://www.amazon.com.mx/interiores-Temperatura-exteriores-recargable-incorporada/dp/B098Q5XZTK/ref=sr_1_1
+4. Elementos electrónicos (alambres, resistores, capacitores, ledes, tabletas de desarrollo, etc.).
+5. Conmutador de red.
+6. Raspberry Pi.
+7. PC.
 
 ## Referencias
 
 1. Wang, C. C., Prather, K. A., Sznitman, J., Jimenez, J. L., Lakdawala, S. S., Tufekci, Z., & Marr, L. C. (2021). *Airborne transmission of respiratory viruses*. Science (New York, N.Y.), 373(6558), eabd9149. https://doi.org/10.1126/science.abd9149
 2. Gobierno de la Ciudad de México. (2021, julio). *COVID-19 CDMX*. https://www.covid19.cdmx.gob.mx/
-3. Money, C. (2021, septiembre). *https://www.washingtonpost.com/health/2021/02/10/carbon-dioxide-device-coronavirus/*. The Washington Post. https://www.washingtonpost.com/health/2021/02/10/carbon-dioxide-device-coronavirus/
+3. Money, C. (2021, septiembre). *The coronavirus is airborne. Here’s how to know if you’re breathing other people’s breath.*. The Washington Post. https://www.washingtonpost.com/health/2021/02/10/carbon-dioxide-device-coronavirus/
 4. Naciones Unidas. (2021, julio). *Salud - Desarrollo Sostenible*. https://www.un.org/sustainabledevelopment/es/health/
 
