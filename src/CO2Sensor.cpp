@@ -65,7 +65,15 @@ const String CO2Sensor::getStatus()
   return status;
 }
 
-const uint8_t* CO2Sensor::getDataFrame()
+const String CO2Sensor::getPrintableDataFrame()
+{
+  dataFrame.clear();
+  for (uint8_t i = 0; i < DATAFRAMELENGTH; i++)
+    dataFrame =+ dataBuffer[i];
+  return dataFrame;
+}
+
+const uint8_t* CO2Sensor::getDataBuffer()
 {
   return dataBuffer;
 }

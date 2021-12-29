@@ -62,6 +62,8 @@ private:
     String softwareVersion;
     /// The status of the last communication with the sensor module
     String status;
+    /// The data frame in String format
+    String dataFrame;
     /// The status of the alarm
     bool alarmStatus;
     /// CO2 measurement
@@ -157,11 +159,17 @@ public:
      */
     const String getStatus();
     /**
-     * @brief Gets the last frame the MCU receives.
+     * @brief Gets the data frame
+     * @returns An Arduino-C string that holds the last data frame the MCU
+     *     receives
+     */
+    const String getPrintableDataFrame();
+    /**
+     * @brief Gets the last data the MCU receives.
      * @returns A pointer to an array holding the last received 5-byte data 
      *     frame.
      */
-    const uint8_t* getDataFrame();
+    const uint8_t* getDataBuffer();
     /**
      * @brief Prints the sensor module's serial number
      * @param hs a hardware serial object

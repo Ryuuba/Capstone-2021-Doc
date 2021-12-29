@@ -6,8 +6,11 @@
 // I2C definitions
 #define SDA 21
 #define SCL 22
-#define FREQ 10000
-
-
+#define BASE_FREQ 100000
+// OLED definitions
+#define OLED_WIDTH 128 // OLED display width, in pixels
+#define OLED_HEIGHT 64 // OLED display height, in pixels
+#define OLED_ADDRESS 0x3C
+#define OLED_FREQ 100000
 
 #endif // CONSTANT_DEFS_H
