@@ -11,6 +11,3 @@
 
 
 #endif // CONSTANT_DEFS_H
-
-
-
