@@ -12,5 +12,14 @@
 #define OLED_HEIGHT 64 // OLED display height, in pixels
 #define OLED_ADDRESS 0x3C
 #define OLED_FREQ 100000
-
+// MQTT definitions
+#define MQTT_BROKER "10.0.0.11"
+#define MQTT_PORT 1883
+#define CLIENT_ID "ESP32"
+#define CO2_TOPIC "esp32/spCO2"
+#define TEMPERATURE_TOPIC "esp32/temp"
+#define HUMIDITY_TOPIC "esp32/humd"
+// WiFi settings
+#define SSID_HOME "Ryuuba"
+#define PASSWD_HOME "xoloitzcuintle"
 #endif // CONSTANT_DEFS_H

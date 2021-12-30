@@ -35,8 +35,9 @@
 #define UNKNOWN_ERROR    "Unknown error"
 
 /**
- * Main class intended for read data from a CUBIC's CM110x Dual Beam NDIR CO2 
- * Sensor 
+ * @brief Main class intended for read data from a CUBIC's CM110x Dual Beam 
+ *     NDIR CO2 Sensor.
+ * @author Adán G. Medrano-Chávez ryuuba@gmail.com 
  * I2C is the protocol that objects from this class uses to communicate 
  * with the sensor module.
  * I2C clock frequency must be set in the range [10000, 400000] Hz to get
@@ -44,6 +45,7 @@
  * This class supports both the CM1106 and CM1107 sensor modules.
  * CM1106 is a highly power-efficient CO2 sensor module.
  * CM1107 is a highlt-accurate CO2 sensor module.
+ * @todo Add callibration mode, return a cover screen, support ISR alarm
  */
 class CO2Sensor
 {
@@ -159,11 +161,18 @@ public:
      */
     const String getStatus();
     /**
-     * @brief Gets the data frame
+     * @brief Gets the data frame.
      * @returns An Arduino-C string that holds the last data frame the MCU
-     *     receives
+     *     received.
+     * @todo The output is not correct
      */
     const String getPrintableDataFrame();
+    /**
+     * @brief Gets the last CO2 reading.
+     * @returns An Arduino-C string that holds the last CO2 reading the MCU
+     *     received.
+     */
+    const String getCO2();
     /**
      * @brief Gets the last data the MCU receives.
      * @returns A pointer to an array holding the last received 5-byte data 

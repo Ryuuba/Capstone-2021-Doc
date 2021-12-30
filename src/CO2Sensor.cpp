@@ -65,6 +65,12 @@ const String CO2Sensor::getStatus()
   return status;
 }
 
+const String CO2Sensor::getCO2()
+{
+  String reading(CO2);
+  return reading;
+}
+
 const String CO2Sensor::getPrintableDataFrame()
 {
   dataFrame.clear();

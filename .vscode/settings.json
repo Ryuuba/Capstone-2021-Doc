@@ -2,5 +2,6 @@
     "files.associations": {
         "array": "cpp",
         "string": "cpp"
-    }
+    },
+    "editor.tabSize": 2
 }
