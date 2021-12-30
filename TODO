@@ -1,3 +1,6 @@
-Program the ISR of the sensor alarm
-Program de FSM
-Program I2C display library
+Code the MQTT client
+Code the ISR of the sensor alarm
+Code the callibration mode  
+Code the FSM that control the screen cover
+Code the Bluetooth configuration mode
+Code the sleep mode
