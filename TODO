@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Code the MQTT client
 Code the ISR of the sensor alarm
 Code the callibration mode  
@@ -6,3 +7,9 @@ Code the Bluetooth configuration mode
 Code the sleep mode
 Code the button function
 Code the debug LED function
+=======
+Check the number of the technological fair is correct.
+Compute the budge required to carry out the project.
+Write about the risks.
+Change the figure, because it shows a mobile phone (as an app) and the correct interface it's a weg page.
+>>>>>>> 2a070c6369be726a8d4c331feef4d3d357f033b7
