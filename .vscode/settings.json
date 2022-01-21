@@ -1,4 +1,11 @@
 {
+<<<<<<< HEAD
+    "files.associations": {
+        "array": "cpp",
+        "string": "cpp"
+    },
+    "editor.tabSize": 2
+=======
     "cSpell.language": "en,es-ES",
     "cSpell.enabled": true,
     "editor.wordWrap": "wordWrapColumn",
@@ -6,4 +13,5 @@
         "editor.wordWrap": "wordWrapColumn",
         "editor.quickSuggestions": false
     }
+>>>>>>> 2a070c6369be726a8d4c331feef4d3d357f033b7
 }
