@@ -20,6 +20,6 @@
 #define TEMPERATURE_TOPIC "esp32/temp"
 #define HUMIDITY_TOPIC "esp32/humd"
 // WiFi settings
-#define SSID_HOME "Ryuuba"
-#define PASSWD_HOME "xoloitzcuintle"
+#define SSID_HOME "C722"
+#define PASSWD_HOME "holamundo"
 #endif // CONSTANT_DEFS_H

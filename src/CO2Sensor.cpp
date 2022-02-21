@@ -15,18 +15,25 @@ void CO2Sensor::begin(TwoWire& i2cDev, uint16_t modelDev)
   readSoftwareVersion();
 }
 
-void CO2Sensor::readFrame(uint8_t command, uint8_t len, ProcessFrameFn fn)
+void CO2Sensor::readFrame(uint8_t command, uint8_t len, ProcessFrameFn fn, uint8_t* dataFrame=nullptr)
 {
   i2cDev->beginTransmission(HW_ADDRESS);
   i2cDev->write(command);
+  if (dataFrame) {
+    uint8_t lenSent = command == CALIBRATE ? 3 : 7;
+    for (uint8_t i = 1; i < lenSent; i++)
+      i2cDev->write(dataFrame[i]);
+  }
   i2cDev->endTransmission();
   i2cDev->requestFrom(HW_ADDRESS, int(len));
   if (i2cDev->available() == len)
   {
     for (uint8_t i = 0; i < len; i++)
       dataBuffer[i] = i2cDev->read();
-    if (checksum(len))
-      (*this.*fn)();
+    if (checksum(len)) {
+      if (fn)
+        (*this.*fn)();
+    }
     else
       status = CHECKSUM_ERROR;
   }

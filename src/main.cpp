@@ -2,10 +2,10 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <PubSubClient.h>
 #include "ConstantDefs.h"
 #include "CO2Sensor.h"
 #include "WiFiSetup.h"
-#include "MQTTClientUtils.h"
 
 // Global objects
 CO2Sensor cm1107;
@@ -32,7 +32,7 @@ void setup()
   client.connect(CLIENT_ID);
   pinMode(TEST_LED, OUTPUT);    // Digital pin blinking a LED
   testLedStatus = false;
-  delay(500);
+  delay(50000);
 }
 
 void loop()

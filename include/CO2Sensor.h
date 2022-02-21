@@ -107,8 +107,9 @@ private:
      * @param command A valid sensor module command
      * @param len The length of the frame
      * @param mf A nostatic CO2Sensor member function that process the frame
+     * @param dataFrame An array that keeps calibration data
      */
-    void readFrame(uint8_t, uint8_t, ProcessFrameFn);
+    void readFrame(uint8_t, uint8_t, ProcessFrameFn, uint8_t*);
     /**
      * @brief Process the serial number frame. This procedure fills the serial 
      * number buffer from the data buffer. Also, this sets the status
