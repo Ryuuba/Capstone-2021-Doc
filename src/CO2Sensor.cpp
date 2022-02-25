@@ -20,8 +20,8 @@ void CO2Sensor::readFrame(uint8_t command, uint8_t len, ProcessFrameFn fn, uint8
   i2cDev->beginTransmission(HW_ADDRESS);
   i2cDev->write(command);
   if (dataFrame) {
-    uint8_t lenSent = command == CALIBRATE ? 3 : 7;
-    for (uint8_t i = 1; i < lenSent; i++)
+    uint8_t dataFrameLength = command == CALIBRATE ? 2 : 6;
+    for (uint8_t i = 0; i < dataFrameLength; i++)
       i2cDev->write(dataFrame[i]);
   }
   i2cDev->endTransmission();
@@ -31,6 +31,7 @@ void CO2Sensor::readFrame(uint8_t command, uint8_t len, ProcessFrameFn fn, uint8
     for (uint8_t i = 0; i < len; i++)
       dataBuffer[i] = i2cDev->read();
     if (checksum(len)) {
+      status = CHECKSUM_OK;
       if (fn)
         (*this.*fn)();
     }
@@ -55,6 +56,24 @@ uint16_t CO2Sensor::read()
 {
   readFrame(READCO2, DATAFRAMELENGTH, &CO2Sensor::processDataFrame);
   return CO2;
+}
+
+bool CO2Sensor::calibrateSensor(uint16_t val, uint8_t pin) {
+  bool success = false;
+  if (val >= 400 && val <= 1500) {
+    uint8_t holdingTime = 0;
+    while(!digitalRead(pin)) {
+      delay(1000);
+      holdingTime++;
+    }
+    if (holdingTime >= 10) {
+      dataBuffer[0] = (val & 0x0700) >> 8;
+      dataBuffer[1] = (val & 0x00FF);
+      readFrame(CALIBRATE, CALIBRATIONFRAMELENGTH, nullptr, dataBuffer);
+      success = true;
+    }
+  }
+  return success;
 }
 
 const String CO2Sensor::getSoftwareVersion()

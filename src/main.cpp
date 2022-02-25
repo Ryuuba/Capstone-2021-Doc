@@ -15,6 +15,7 @@ WiFiSetup wifi(SSID_HOME, PASSWD_HOME);
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+
 void setup()
 {
   Wire.begin(SDA, SCL, BASE_FREQ);
@@ -27,12 +28,17 @@ void setup()
   cm1107.begin(Wire, CM1107_MODEL);
   cm1107.printSerialNumber(Serial);
   cm1107.printSoftwareVersion(Serial);
+  pinMode(CALIBRATION_BUTTON, INPUT_PULLUP);
+  if (digitalRead(CALIBRATION_BUTTON) == LOW) {
+    Serial.println("Entering to calibration mode");
+    if (cm1107.calibrateSensor(CALIBRATION_TARGET_VALUE, CALIBRATION_BUTTON))
+      Serial.printf("Set baseline at %i PPM\n", CALIBRATION_TARGET_VALUE);
+  }
   wifi.begin(Serial);
   client.setServer(MQTT_BROKER, MQTT_PORT);
   client.connect(CLIENT_ID);
   pinMode(TEST_LED, OUTPUT);    // Digital pin blinking a LED
   testLedStatus = false;
-  delay(50000);
 }
 
 void loop()

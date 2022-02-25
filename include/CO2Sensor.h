@@ -20,9 +20,11 @@
 
 #define SVFRAMELENGTH   0x0C //!< The length of the software version frame
 #define SNFRAMELENGTH   0x0C //!< The length of the serial number frame
-#define DATAFRAMELENGTH 0x05 //!< The length of the serial number frame
+#define DATAFRAMELENGTH 0x05 //!< The length of the data frame
+#define CALIBRATIONFRAMELENGTH 0x04 //!< The length of the calibration frame 
 
 #define STATUS_OK        "OK"              
+#define CHECKSUM_OK      "Checksum OK"
 #define INCOMPLETE_FRAME "Incomplete frame"
 #define CHECKSUM_ERROR   "Checksum fails"
 #define DRIFT            "Drift"
@@ -41,7 +43,7 @@
  * I2C is the protocol that objects from this class uses to communicate 
  * with the sensor module.
  * I2C clock frequency must be set in the range [10000, 400000] Hz to get
- * readings correctly. Low clock frequencies are prefered.
+ * readings correctly. Low clock frequencies are preferred.
  * This class supports both the CM1106 and CM1107 sensor modules.
  * CM1106 is a highly power-efficient CO2 sensor module.
  * CM1107 is a highlt-accurate CO2 sensor module.
@@ -52,7 +54,7 @@ class CO2Sensor
 private:
     /// A pointer to an I2C instance created by the user
     TwoWire* i2cDev;
-    /// Keeps received frames from the sensor module
+    /// Keeps received frames from the sensor module and callibration values
     uint8_t dataBuffer[12];
     /// The last status the MCU receives from the sensor when reading CO2
     uint8_t statusByte;
@@ -148,7 +150,7 @@ public:
     /**
      * @brief Gets the sensor module's serial number.
      * @returns A pointer to the 10-byte buffer that holds the serial number.
-     * @note the HEX format is prefered to print this value.
+     * @note the HEX format is preferred to print this value.
      */
     const uint8_t* getSerialNumber();
     /**
@@ -180,6 +182,13 @@ public:
      *     frame.
      */
     const uint8_t* getDataBuffer();
+    /**
+     * @brief Callibrates manually the CO2 sensor
+     * @param val An unsigned 16-bit value between 400 and 1500
+     * @param pin A pin configured as INPUT_PULLUP
+     * @returns True if the sensor is callibrated, otherwise, False
+     */
+    bool calibrateSensor(uint16_t, uint8_t);
     /**
      * @brief Prints the sensor module's serial number
      * @param hs a hardware serial object
