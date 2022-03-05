@@ -2,6 +2,7 @@
 
 CO2Sensor::CO2Sensor() 
   : i2cDev(nullptr)
+  , dataBuffer{}
   , alarmStatus(false)
 {
 
@@ -25,6 +26,7 @@ void CO2Sensor::readFrame(uint8_t command, uint8_t len, ProcessFrameFn fn, uint8
       i2cDev->write(dataFrame[i]);
   }
   i2cDev->endTransmission();
+  delay(500);
   i2cDev->requestFrom(HW_ADDRESS, int(len));
   if (i2cDev->available() == len)
   {

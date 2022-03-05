@@ -4,21 +4,19 @@
 // This led indicates whether the mcu is working or not (debug)
 #define TEST_LED 25
 // The button entering the manual calibration mode
-#define CALIBRATION_BUTTON 19
+#define CALIBRATION_BUTTON 32
 // The value to calibrate the sensor, use a calibrated sensor to set this value
 // or use 400 PPM in and fresh-air indoor environment
-#define CALIBRATION_TARGET_VALUE 440
+#define CALIBRATION_TARGET_VALUE 420
 // I2C definitions
-#define SDA 21
-#define SCL 22
 #define BASE_FREQ 100000
 // OLED definitions
 #define OLED_WIDTH 128 // OLED display width, in pixels
 #define OLED_HEIGHT 64 // OLED display height, in pixels
 #define OLED_ADDRESS 0x3C
-#define OLED_FREQ 100000
+#define OLED_FREQ 400000
 // MQTT definitions
-#define MQTT_BROKER "10.0.0.6"
+#define MQTT_BROKER "192.168.1.70"
 #define MQTT_PORT 1883
 #define CLIENT_ID "ESP32"
 #define CO2_TOPIC "esp32/spCO2"
