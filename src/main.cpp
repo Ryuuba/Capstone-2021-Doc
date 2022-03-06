@@ -8,7 +8,7 @@
 #include "WiFiSetup.h"
 
 // Global objects
-CO2Sensor cm1107;
+CO2Sensor* cm1107;
 Adafruit_SSD1306* oled;
 WiFiSetup wifi(SSID_HOME, PASSWD_HOME);
 WiFiClient espClient;
@@ -28,13 +28,14 @@ void setup()
     Serial.println("Oled allocation failed");
     while (true);
   }
-  cm1107.begin(Wire, CM1107_MODEL);
-  cm1107.printSerialNumber(Serial);
-  cm1107.printSoftwareVersion(Serial);
+  cm1107 = new CO2Sensor();
+  cm1107->begin(Wire, CM1107_MODEL);
+  cm1107->printSerialNumber(Serial);
+  cm1107->printSoftwareVersion(Serial);
   pinMode(CALIBRATION_BUTTON, INPUT_PULLUP);
   if (digitalRead(CALIBRATION_BUTTON) == LOW) {
     Serial.println("Entering to calibration mode");
-    if (cm1107.calibrateSensor(CALIBRATION_TARGET_VALUE, CALIBRATION_BUTTON))
+    if (cm1107->calibrateSensor(CALIBRATION_TARGET_VALUE, CALIBRATION_BUTTON))
       Serial.printf("Set baseline at %i PPM\n", CALIBRATION_TARGET_VALUE);
   }
   wifi.begin(Serial);
@@ -46,19 +47,19 @@ void setup()
 
 void loop()
 {
-  uint16_t CO2 = cm1107.read();
-  cm1107.printDataFrame(Serial);
-  cm1107.printCO2Measurement(Serial);
-  cm1107.printStatus(Serial);
+  uint16_t CO2 = cm1107->read();
+  cm1107->printDataFrame(Serial);
+  cm1107->printCO2Measurement(Serial);
+  cm1107->printStatus(Serial);
   oled->clearDisplay();
   oled->setTextSize(2);
   oled->setTextColor(SSD1306_WHITE);
   oled->setCursor(0, 0);
   oled->printf("CO2 sensor status\n");
   oled->setTextSize(1);
-  oled->printf("Frame: %s\n", cm1107.getPrintableDataFrame().c_str());
+  oled->printf("Frame: %s\n", cm1107->getPrintableDataFrame().c_str());
   oled->printf("CO2 measurement: %i\n", CO2);
-  oled->printf("Status: %s\n", cm1107.getStatus().c_str());
+  oled->printf("Status: %s\n", cm1107->getStatus().c_str());
   oled->display();
   if (!client.connected())
   {
@@ -68,7 +69,7 @@ void loop()
   else
   {
     client.loop();
-    client.publish(CO2_TOPIC, cm1107.getCO2().c_str());
+    client.publish(CO2_TOPIC, cm1107->getCO2().c_str());
   }
   testLedStatus = !testLedStatus;
   digitalWrite(TEST_LED, testLedStatus);
