@@ -10,7 +10,7 @@
 // Global objects
 CO2Sensor* cm1107;
 Adafruit_SSD1306* oled;
-WiFiSetup wifi(SSID_HOME, PASSWD_HOME);
+WiFiSetup* wifi;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -38,7 +38,8 @@ void setup()
     if (cm1107->calibrateSensor(CALIBRATION_TARGET_VALUE, CALIBRATION_BUTTON))
       Serial.printf("Set baseline at %i PPM\n", CALIBRATION_TARGET_VALUE);
   }
-  wifi.begin(Serial);
+  wifi = new WiFiSetup(SSID_HOME, PASSWD_HOME);
+  wifi->begin(Serial);
   client.setServer(MQTT_BROKER, MQTT_PORT);
   client.connect(CLIENT_ID);
   pinMode(TEST_LED, OUTPUT);    // Digital pin blinking a LED

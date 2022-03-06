@@ -137,6 +137,11 @@ public:
      */
     CO2Sensor();
     /**
+     * @brief Default destructor
+     * 
+     */
+    ~CO2Sensor() { }
+    /**
      * @brief Sets the I2C class attribute.
      * @param i2c A reference to an TwoWire object instanced by the user.
      * @param model The model of the CO2 Sensor module (default CM1107).

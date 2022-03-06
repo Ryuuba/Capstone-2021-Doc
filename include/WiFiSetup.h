@@ -31,6 +31,11 @@ public:
    */
   WiFiSetup(const char*, const char*, uint32_t delay = 500);
   /**
+   * @brief default destructor
+   * 
+   */
+  ~WiFiSetup() {}
+  /**
    * @brief Start the connection with the WiFi Network
    * @param serial A HardwareSerial object to print the connection status
    * @returs True if the connection is established before MAX_ATTEMPTs,
