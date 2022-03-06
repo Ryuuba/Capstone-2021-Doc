@@ -1,0 +1,41 @@
+{
+    "name":"default",
+    "WiFi":
+    {
+        "SSID":"Ryuuba",
+        "passwd":"xoloitzcuintle"
+    },
+    "MQTT":
+    {
+        "id":"esp32",
+        "broker":"192.168.1.70",
+        "port":1883,
+        "topics":[
+            {
+                "topic":"esp32/spCO2",
+                "QoS":"0"
+            },
+            {
+                "topic":"esp32/temp",
+                "QoS":"0"
+            },
+            {
+                "topic":"esp32/humd",
+                "QoS":"0"
+            }
+        ]
+    },
+    "BLE":
+    {
+        "mode":"server",
+        "service":{
+            "name":"",
+            "UUID":"",
+            "characteristic":[
+                {"property":"", "value":"","descriptor":""},
+                {"property":"", "value":"","descriptor":""},
+                {"property":"", "value":"","descriptor":""}
+            ]
+        }
+    }
+}

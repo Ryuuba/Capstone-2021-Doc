@@ -9,18 +9,21 @@
 
 // Global objects
 CO2Sensor cm1107;
-bool testLedStatus;
-Adafruit_SSD1306 oled(OLED_WIDTH, OLED_HEIGHT, &Wire, -1, OLED_FREQ, BASE_FREQ);
+Adafruit_SSD1306* oled;
 WiFiSetup wifi(SSID_HOME, PASSWD_HOME);
 WiFiClient espClient;
 PubSubClient client(espClient);
+
+// Global variables
+bool testLedStatus;
 
 
 void setup()
 {
   Wire.begin(SDA, SCL, BASE_FREQ);
   Serial.begin(9600);
-  if(!oled.begin(SSD1306_SWITCHCAPVCC, OLED_ADDRESS, false))
+  oled = new Adafruit_SSD1306(OLED_WIDTH, OLED_HEIGHT, &Wire, -1, OLED_FREQ, BASE_FREQ);
+  if(!oled->begin(SSD1306_SWITCHCAPVCC, OLED_ADDRESS, false))
   {
     Serial.println("Oled allocation failed");
     while (true);
@@ -47,16 +50,16 @@ void loop()
   cm1107.printDataFrame(Serial);
   cm1107.printCO2Measurement(Serial);
   cm1107.printStatus(Serial);
-  oled.clearDisplay();
-  oled.setTextSize(2);
-  oled.setTextColor(SSD1306_WHITE);
-  oled.setCursor(0, 0);
-  oled.printf("CO2 sensor status\n");
-  oled.setTextSize(1);
-  oled.printf("Frame: %s\n", cm1107.getPrintableDataFrame().c_str());
-  oled.printf("CO2 measurement: %i\n", CO2);
-  oled.printf("Status: %s\n", cm1107.getStatus().c_str());
-  oled.display();
+  oled->clearDisplay();
+  oled->setTextSize(2);
+  oled->setTextColor(SSD1306_WHITE);
+  oled->setCursor(0, 0);
+  oled->printf("CO2 sensor status\n");
+  oled->setTextSize(1);
+  oled->printf("Frame: %s\n", cm1107.getPrintableDataFrame().c_str());
+  oled->printf("CO2 measurement: %i\n", CO2);
+  oled->printf("Status: %s\n", cm1107.getStatus().c_str());
+  oled->display();
   if (!client.connected())
   {
     if (!client.connect(CLIENT_ID))
