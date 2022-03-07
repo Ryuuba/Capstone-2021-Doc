@@ -6,6 +6,7 @@
 #include "ConstantDefs.h"
 #include "CO2Sensor.h"
 #include "WiFiSetup.h"
+#include "SensorProfile.h"
 
 // Global objects
 CO2Sensor* cm1107;
@@ -15,35 +16,54 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 // Global variables
-bool testLedStatus;
+const char* sensorConfigFile = "/sensorProfile.json";
+const char* netwConfigFile = "/netwProfile.json";
+uint8_t button;
+uint8_t led;
+bool ledStatus;
 
 
 void setup()
 {
   Wire.begin(SDA, SCL, BASE_FREQ);
   Serial.begin(9600);
-  oled = new Adafruit_SSD1306(OLED_WIDTH, OLED_HEIGHT, &Wire, -1, OLED_FREQ, BASE_FREQ);
-  if(!oled->begin(SSD1306_SWITCHCAPVCC, OLED_ADDRESS, false))
-  {
+  SensorProfile sProfile;
+  if (!sProfile.begin(sensorConfigFile, Serial)) {
+    Serial.printf(
+      "Sensor profile cannot be opened from file: %s\n", 
+      sensorConfigFile
+    );
+    while(true);
+  }
+  oled = new Adafruit_SSD1306(
+    sProfile.oled.width, 
+    sProfile.oled.height, 
+    &Wire, 
+    sProfile.oled.rst_pin, 
+    sProfile.oled.freq, 
+    sProfile.i2cFreq
+  );
+  if(!oled->begin(SSD1306_SWITCHCAPVCC, sProfile.oled.address, false)) {
     Serial.println("Oled allocation failed");
     while (true);
   }
   cm1107 = new CO2Sensor();
-  cm1107->begin(Wire, CM1107_MODEL);
+  cm1107->begin(Wire, sProfile.co2Sensor.model);
   cm1107->printSerialNumber(Serial);
   cm1107->printSoftwareVersion(Serial);
-  pinMode(CALIBRATION_BUTTON, INPUT_PULLUP);
-  if (digitalRead(CALIBRATION_BUTTON) == LOW) {
+  button = sProfile.button.pin;
+  pinMode(button, sProfile.button.mode);
+  if (digitalRead(button) == LOW) {
     Serial.println("Entering to calibration mode");
-    if (cm1107->calibrateSensor(CALIBRATION_TARGET_VALUE, CALIBRATION_BUTTON))
-      Serial.printf("Set baseline at %i PPM\n", CALIBRATION_TARGET_VALUE);
+    if (cm1107->calibrateSensor(sProfile.co2Sensor.baseline, button))
+      Serial.printf("Set baseline at %i PPM\n", sProfile.co2Sensor.baseline);
   }
+  led = sProfile.led.pin;
+  pinMode(led, sProfile.led.mode);
   wifi = new WiFiSetup(SSID_HOME, PASSWD_HOME);
   wifi->begin(Serial);
   client.setServer(MQTT_BROKER, MQTT_PORT);
   client.connect(CLIENT_ID);
-  pinMode(TEST_LED, OUTPUT);    // Digital pin blinking a LED
-  testLedStatus = false;
 }
 
 void loop()
@@ -72,8 +92,8 @@ void loop()
     client.loop();
     client.publish(CO2_TOPIC, cm1107->getCO2().c_str());
   }
-  testLedStatus = !testLedStatus;
-  digitalWrite(TEST_LED, testLedStatus);
+  ledStatus = !ledStatus;
+  digitalWrite(TEST_LED, ledStatus);
   delay(5000);
 }
 

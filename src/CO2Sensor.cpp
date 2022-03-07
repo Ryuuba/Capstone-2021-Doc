@@ -8,7 +8,7 @@ CO2Sensor::CO2Sensor()
 
 }
 
-void CO2Sensor::begin(TwoWire& i2cDev, uint16_t modelDev)
+void CO2Sensor::begin(TwoWire& i2cDev, const char* modelDev)
 {
   this->i2cDev = &i2cDev;
   this->modelDev = modelDev;

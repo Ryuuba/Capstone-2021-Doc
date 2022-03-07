@@ -1,0 +1,42 @@
+{
+    "button":
+    {
+        "pin":32,
+        "mode":5,
+        "function":"Calibration mode",
+        "manufacturer":"KYO"
+    },
+    "led":
+    {
+        "pin":25,
+        "mode":2,
+        "function":"Keep alive",
+        "manufacturer":"generic"
+    },
+    "i2c":
+    {
+        "freq":100000,
+        "pull-up":4700,
+        "oled":
+        {
+            "model":"SSD1306",
+            "address":60,
+            "width":128,
+            "height":64,
+            "rstPin":-1,
+            "freq":400000,
+            "manufacturer":"generic"
+        },
+        "CO2sensor":
+        {
+            "address":49,
+            "magnitude":"CO2", 
+            "model": "cm1107", 
+            "unit":"ppm", 
+            "baseline": 400,
+            "manufacturer":"Cubic",
+            "freq":100000,
+            "voltage":5
+        }
+    }
+}

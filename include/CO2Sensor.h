@@ -4,8 +4,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define CM1107_MODEL 1107 //!< Key that identifies the CM1107 module
-#define CM1106_MODEL 1106 //!< Key that identifies the CM1106 module
+#define CM1107_MODEL "cm1107" //!< Key that identifies the CM1107 module
+#define CM1106_MODEL "cm1106" //!< Key that identifies the CM1106 module
 
 #define HW_ADDRESS 0x31 //!< Hardware address
 
@@ -59,7 +59,7 @@ private:
     /// The last status the MCU receives from the sensor when reading CO2
     uint8_t statusByte;
     /// The model of the sensor module (CM1106 or CM1107)
-    uint16_t modelDev;
+    String modelDev;
     /// The serial number of the sensor module
     uint8_t serialNumber[10];
     /// The software version of the sensor module
@@ -146,7 +146,7 @@ public:
      * @param i2c A reference to an TwoWire object instanced by the user.
      * @param model The model of the CO2 Sensor module (default CM1107).
      */
-    void begin(TwoWire&, uint16_t);
+    void begin(TwoWire&, const char*);
     /**
      * @brief Reads a CO2 measurement.
      * @returns A 16-bit value that contains the CO2 concentration (PPM).
