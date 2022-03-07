@@ -6,9 +6,8 @@ bool SensorProfile::begin(const char* filename, HardwareSerial& serial) {
     File f = SPIFFS.open(filename, "r");
     if (f) {
       uint16_t fileSize = f.size();
-      std::unique_ptr<char[]> buffer(new char[fileSize]);
+      buffer = std::unique_ptr<char[]>(new char[fileSize]);
       f.readBytes(buffer.get(), fileSize);
-      StaticJsonDocument<size> doc;
       DeserializationError error = deserializeJson(doc, buffer.get(), fileSize);
       if(!error) {
         JsonObject i2c = doc["i2c"];

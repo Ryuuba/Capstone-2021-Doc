@@ -38,7 +38,7 @@ public:
   /**
    * @brief Start the connection with the WiFi Network
    * @param serial A HardwareSerial object to print the connection status
-   * @returs True if the connection is established before MAX_ATTEMPTs,
+   * @returns True if the connection is established before MAX_ATTEMPTs,
    *     otherwise, returns false (the connection cannot be established)
    */
   bool begin(HardwareSerial&);

@@ -53,8 +53,10 @@ public:
    */
   bool begin(const char*, HardwareSerial&);
 private:
-  // @brief The size of the configuration file
+  // @brief The size of the JSON doc data structure
   static const uint16_t size = 512;
+  StaticJsonDocument<size> doc;
+  std::unique_ptr<char[]> buffer;
 };
 
 #endif // SENSOR_PROFILE_H

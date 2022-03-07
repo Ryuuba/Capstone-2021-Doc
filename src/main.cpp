@@ -7,6 +7,7 @@
 #include "CO2Sensor.h"
 #include "WiFiSetup.h"
 #include "SensorProfile.h"
+#include "NetwProfile.h"
 
 // Global objects
 CO2Sensor* cm1107;
@@ -14,6 +15,7 @@ Adafruit_SSD1306* oled;
 WiFiSetup* wifi;
 WiFiClient espClient;
 PubSubClient client(espClient);
+NetworkProfile nProfile;
 
 // Global variables
 const char* sensorConfigFile = "/sensorProfile.json";
@@ -21,7 +23,6 @@ const char* netwConfigFile = "/netwProfile.json";
 uint8_t button;
 uint8_t led;
 bool ledStatus;
-
 
 void setup()
 {
@@ -60,10 +61,17 @@ void setup()
   }
   led = sProfile.led.pin;
   pinMode(led, sProfile.led.mode);
-  wifi = new WiFiSetup(SSID_HOME, PASSWD_HOME);
+  if (!nProfile.begin(netwConfigFile, Serial)) {
+    Serial.printf(
+      "Network profile cannot be opened from file: %s\n", 
+      netwConfigFile
+    );
+    while(true);
+  }
+  wifi = new WiFiSetup(nProfile.wifi.ssid, nProfile.wifi.passwd);
   wifi->begin(Serial);
-  client.setServer(MQTT_BROKER, MQTT_PORT);
-  client.connect(CLIENT_ID);
+  client.setServer(nProfile.mqttConn.broker_addr, nProfile.mqttConn.port);
+  client.connect(nProfile.mqttConn.id);
 }
 
 void loop()
@@ -84,16 +92,16 @@ void loop()
   oled->display();
   if (!client.connected())
   {
-    if (!client.connect(CLIENT_ID))
+    if (!client.connect(nProfile.mqttConn.id))
       Serial.println("MQTT client: Lost connection to broker");
   }
   else
   {
     client.loop();
-    client.publish(CO2_TOPIC, cm1107->getCO2().c_str());
+    client.publish(nProfile.co2.topic, cm1107->getCO2().c_str());
   }
   ledStatus = !ledStatus;
-  digitalWrite(TEST_LED, ledStatus);
+  digitalWrite(led, ledStatus);
   delay(5000);
 }
 
