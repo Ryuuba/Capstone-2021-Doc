@@ -29,6 +29,7 @@ bool SensorProfile::begin(const char* filename, HardwareSerial& serial) {
         JsonObject sensor_button = doc["button"];
         button.pin = sensor_button["pin"]; // 32
         button.mode = sensor_button["mode"]; // 5
+        f.close();
         success = true;
       }
       else {

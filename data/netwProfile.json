@@ -1,5 +1,5 @@
 {
-    "name":"default",
+    "profile":"default",
     "WiFi":
     {
         "SSID":"Ryuuba",
@@ -7,14 +7,24 @@
     },
     "MQTT":
     {
-        "id":"esp32",
+        "id":"co2monitor",
         "broker":"192.168.1.70",
         "port":1883,
-        "topics":[
+        "publish":
+        [
             {
-                "topic":"esp32/CO2",
+                "topic":"esp32/CO2ppm",
+                "QoS":"0"
+            },
+            {
+                "topic":"esp32/tempC",
+                "QoS":"0"
+            },
+            {
+                "topic":"esp32/hum%",
                 "QoS":"0"
             }
+
         ]
     }
 }
