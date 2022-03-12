@@ -40,8 +40,8 @@ def on_message(client, userdata, msg):
     print(msg.topic + ' ' + str(msg.payload, encoding='UTF8'))
     print(msg.topic.split('/'))
     data_tuple = (
-        str(int(time())),                  # The current time (UNIX format)
-        msg.topic.split('/')[1],      # The sensor location
+        str(int(time())),                      # The current time (UNIX format)
+        msg.topic.split('/')[1],               # The sensor location
         int(str(msg.payload, encoding='UTF8')) # The sensor reading
     )
     print('Data tuple {} is saved into {}'.format(data_tuple, db_path))
