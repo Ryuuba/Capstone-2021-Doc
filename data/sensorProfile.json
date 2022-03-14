@@ -1,4 +1,5 @@
 {
+    "sampling":5,
     "button":
     {
         "pin":32,

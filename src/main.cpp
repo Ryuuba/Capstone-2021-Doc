@@ -23,6 +23,8 @@ const char* netwConfigFile = "/netwProfile.json";
 uint8_t button;
 uint8_t led;
 bool ledStatus;
+unsigned long seconds = 1000L; //Notice the L 
+unsigned long minutes;
 
 void setup()
 {
@@ -72,6 +74,7 @@ void setup()
   wifi->begin(Serial);
   client.setServer(nProfile.mqttConn.broker_addr, nProfile.mqttConn.port);
   client.connect(nProfile.mqttConn.id);
+  minutes = sProfile.sampling;
 }
 
 void loop()
@@ -102,7 +105,7 @@ void loop()
   }
   ledStatus = !ledStatus;
   digitalWrite(led, ledStatus);
-  delay(5000);
+  delay(minutes);
 }
 
 

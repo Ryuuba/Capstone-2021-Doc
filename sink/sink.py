@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-import sqlite3_conn
+import db_conn.sqlite3_conn as sqlite3_conn
 from time import time
 
 from sys import argv
