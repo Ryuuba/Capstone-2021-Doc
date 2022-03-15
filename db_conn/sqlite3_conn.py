@@ -71,5 +71,3 @@ def get_last_data(db_conn: sqlite3.Connection,  size: int, location: str) -> lis
     cursor.execute(query)
     return cursor.fetchall()
 
-def close_connection(db_conn: sqlite3.Connection):
-    db_conn.close()

@@ -1,8 +1,5 @@
-from cProfile import label
-import imp
-from optparse import Values
 from flask import Flask, Response, render_template, stream_with_context, request
-import db_conn.sqlite3_conn as sqlite3_conn
+from ..db_conn import sqlite3_conn
 from datetime import datetime
 import tzlocal
 import json
@@ -23,7 +20,7 @@ def update_readings():
     try:
         logger.info("Client %s connected", client_ip)
         while True:
-            db_conn = sqlite3_conn.create_connection('./data/test.db')
+            db_conn = sqlite3_conn.create_connection('../database/CO2reading.db')
             c722_data = sqlite3_conn.get_last_data(db_conn, 1, 'C722')
             c722_time = datetime.fromtimestamp(
                     c722_data[0][0], tzlocal.get_localzone()
@@ -69,4 +66,4 @@ def chart_data():
 
 if __name__ == '__main__':
     print('Start server...')
-    app.run(host = '0.0.0.0', threaded=True, debug = True)
+    app.run(host = '0.0.0.0', threaded=True, debug=True)

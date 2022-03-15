@@ -1,4 +1,4 @@
 esp32/C722/CO2/ppm
-esp32/room1/CO2/ppm
+esp32/LabRed/CO2/ppm
 esp32/bot1/CO2/ppm
 esp32/bot2/CO2/ppm
