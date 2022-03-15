@@ -74,7 +74,7 @@ void setup()
   wifi->begin(Serial);
   client.setServer(nProfile.mqttConn.broker_addr, nProfile.mqttConn.port);
   client.connect(nProfile.mqttConn.id);
-  minutes = sProfile.sampling;
+  minutes = sProfile.delay * seconds;
 }
 
 void loop()

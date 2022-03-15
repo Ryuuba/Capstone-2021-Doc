@@ -14,16 +14,16 @@
         {
             "co2":
             {
-                "topic":"esp32/CO2/ppm",
+                "topic":"esp32/LabRed/CO2/ppm",
                 "QoS":0
             },
             "temperature":
             {
-                "topic":"esp32/temp/C",
+                "topic":"esp32/LabRed/temp/C",
                 "QoS":0
             },
             "humidity":{
-                "topic":"esp32/hum/%",
+                "topic":"esp32/LabRed/hum/%",
                 "QoS":0
             }
         }

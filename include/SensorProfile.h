@@ -13,6 +13,7 @@
 class SensorProfile {
 public:
   uint32_t i2cFreq;
+  uint8_t delay;
   struct {
     uint8_t address;
     uint8_t height;
