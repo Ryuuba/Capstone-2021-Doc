@@ -7,23 +7,23 @@
     },
     "MQTT":
     {
-        "id":"co2monitor",
+        "id":"C722co2monitor",
         "broker":"172.30.5.41",
         "port":1883,
         "publish":
         {
             "co2":
             {
-                "topic":"esp32/LabRed/CO2/ppm",
+                "topic":"esp32/C722/CO2/ppm",
                 "QoS":0
             },
             "temperature":
             {
-                "topic":"esp32/LabRed/temp/C",
+                "topic":"esp32/C722/temp/C",
                 "QoS":0
             },
             "humidity":{
-                "topic":"esp32/LabRed/hum/%",
+                "topic":"esp32/C722/hum/%",
                 "QoS":0
             }
         }
