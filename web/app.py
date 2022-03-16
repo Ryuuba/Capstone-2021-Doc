@@ -1,11 +1,12 @@
 from flask import Flask, Response, render_template, stream_with_context, request
-from ..db_conn import sqlite3_conn
 from datetime import datetime
 import tzlocal
 import json
 import time
 import logging
 import sys
+sys.path.append('..')
+import db_conn.sqlite3_conn as sqlite3_conn
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger(__name__)

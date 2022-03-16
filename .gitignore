@@ -1,4 +1,5 @@
 .vscode
 .vscode/settings.json
 database/CO2reading.db
-sink/__pycache__/
+**/__pycache__
+*.o

@@ -47,7 +47,7 @@
         <script>
             var c722Ctx = document.getElementById("lineChartC722").getContext("2d");
             var labRedCtx = document.getElementById("lineChartLabRedes").getContext("2d");
-            const config = {
+            const C722Config = {
                 type: "line",
                 data: {
                     labels: [],
@@ -65,28 +65,46 @@
                     responsive: false
                 }
             };
-            const c722Chart = new Chart(c722Ctx, config);
-            const labRedChart = new Chart(labRedCtx, config);
+            const LabRedConfig = {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "",
+                            data: [],
+                            fill: true,
+                            borderColor: "",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false
+                }
+            };
+            const c722Chart = new Chart(c722Ctx, C722Config);
+            const labRedChart = new Chart(labRedCtx, LabRedConfig);
             const source = new EventSource("/chart-data");
             source.onmessage = function (event) {
                 const data = JSON.parse(event.data);
-                if (config.data.labels.length === 10) {
-                    config.data.labels.shift();
-                    config.data.datasets[0].data.shift();
+                if (C722Config.data.labels.length === 10) {
+                    C722Config.data.labels.shift();
+                    C722Config.data.datasets[0].data.shift();
                 }
-                config.data.datasets[0].label=data.C722title;
-                config.data.datasets[0].borderColor=data.C722color;
-                config.data.labels.push(data.C722time);
-                config.data.datasets[0].data.push(data.C722value);
+                C722Config.data.datasets[0].label=data.C722title;
+                C722Config.data.datasets[0].borderColor=data.C722color;
+                C722Config.data.labels.push(data.C722time);
+                C722Config.data.datasets[0].data.push(data.C722value);
                 c722Chart.update();
-                if (config.data.labels.length === 10) {
-                    config.data.labels.shift();
-                    config.data.datasets[0].data.shift();
+                if (LabRedConfig.data.labels.length === 10) {
+                    LabRedConfig.data.labels.shift();
+                    LabRedConfig.data.datasets[0].data.shift();
                 }
-                config.data.datasets[0].label=data.LabRedtitle;
-                config.data.datasets[0].borderColor=data.LabRedcolor;
-                config.data.labels.push(data.LabRedtime);
-                config.data.datasets[0].data.push(data.LabRedvalue);
+                LabRedConfig.data.datasets[0].label=data.LabRedtitle;
+                LabRedConfig.data.datasets[0].borderColor=data.LabRedcolor;
+                LabRedConfig.data.labels.push(data.LabRedtime);
+                LabRedConfig.data.datasets[0].data.push(data.LabRedvalue);
                 labRedChart.update();
             }
         </script>
