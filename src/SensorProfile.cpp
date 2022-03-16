@@ -10,6 +10,7 @@ bool SensorProfile::begin(const char* filename, HardwareSerial& serial) {
       f.readBytes(buffer.get(), fileSize);
       DeserializationError error = deserializeJson(doc, buffer.get(), fileSize);
       if(!error) {
+        delay = doc["sampling"];
         JsonObject i2c = doc["i2c"];
         i2cFreq = i2c["freq"];
         JsonObject i2c_oled = i2c["oled"];
