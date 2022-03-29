@@ -7,23 +7,23 @@
     },
     "MQTT":
     {
-        "id":"C722co2monitor",
+        "id":"botActuator",
         "broker":"172.30.5.41",
         "port":1883,
-        "publish":
+        "topics":
         {
             "co2":
             {
-                "topic":"esp32/C722/CO2/ppm",
+                "topic":"esp32/bot1/CO2/ppm",
                 "QoS":0
             },
             "temperature":
             {
-                "topic":"esp32/C722/temp/C",
+                "topic":"esp32/bot1/temp/C",
                 "QoS":0
             },
             "humidity":{
-                "topic":"esp32/C722/hum/%",
+                "topic":"esp32/bot1/hum/%",
                 "QoS":0
             }
         }

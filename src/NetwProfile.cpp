@@ -16,7 +16,7 @@ bool NetworkProfile::begin(const char* filename, HardwareSerial& serial) {
         mqttConn.id = doc["MQTT"]["id"];
         mqttConn.broker_addr = doc["MQTT"]["broker"];
         mqttConn.port = doc["MQTT"]["port"];
-        JsonObject publish = doc["MQTT"]["publish"];
+        JsonObject publish = doc["MQTT"]["topics"];
         co2.topic = publish["co2"]["topic"];
         co2.QoS = publish["co2"]["QoS"];
         temp.topic = publish["temperature"]["topic"];

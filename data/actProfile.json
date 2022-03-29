@@ -1,0 +1,24 @@
+{
+    "amberLED":
+    {
+        "pin":23,
+        "mode":2,
+        "function":"Indicates 600 ppm",
+        "manufacturer":"generic"
+    },
+    "redLED":
+    {
+        "pin":22,
+        "mode":2,
+        "function":"Indicates 1000 ppm",
+        "manufacturer":"generic"
+    },
+    "fan":
+    {
+        "pin":21,
+        "mode":2,
+        "function":"Indicates >1000 ppm",
+        "manufacturer":"Lasko",
+        "model":"WindMachine"
+    }
+}
