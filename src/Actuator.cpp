@@ -37,20 +37,21 @@ void readCO2PPM(char* topic, byte* message, unsigned int length) {
     digitalWrite(23, LOW);
     digitalWrite(22, LOW);
     digitalWrite(21, HIGH);
+    Serial.println("Warning!!!");
   }
 }
 
 void setup() {
   Serial.begin(9600);
   Serial.println("Initialization starts");
-//   if(actProfile.begin(ACTCONFILE, Serial)) {
-//     Serial.printf(
-//       "Actuator profile cannot be opened from file: %s\n", 
-//       ACTCONFILE
-//     );
-//     while(true);
-//   }
-//   Serial.println("Actuator profile OK");
+  if(actProfile.begin(ACTCONFILE, Serial)) {
+    Serial.printf(
+      "Actuator profile cannot be opened from file: %s\n", 
+      ACTCONFILE
+    );
+    while(true);
+  }
+  Serial.println("Actuator profile OK");
   pinMode(23, OUTPUT);
   pinMode(22, OUTPUT);
   pinMode(21, OUTPUT);
