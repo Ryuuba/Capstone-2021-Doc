@@ -19,24 +19,24 @@ void readCO2PPM(char* topic, byte* message, unsigned int length) {
   uint16_t co2Reading = co2ReadingStr.toInt();
   Serial.printf("CO2: %i ppm\n", co2Reading);
   if (co2Reading < 600) {
-    digitalWrite(23, LOW);
-    digitalWrite(22, LOW);
-    digitalWrite(21, LOW);
+    digitalWrite(actProfile.amberLED.pin, LOW);
+    digitalWrite(actProfile.redLED.pin, LOW);
+    digitalWrite(actProfile.fan.pin, LOW);
   }
   else if(co2Reading < 800) {
-    digitalWrite(23, HIGH);
-    digitalWrite(22, LOW);
-    digitalWrite(21, LOW);
+    digitalWrite(actProfile.amberLED.pin, HIGH);
+    digitalWrite(actProfile.redLED.pin, LOW);
+    digitalWrite(actProfile.fan.pin, LOW);
   }
   else if(co2Reading < 1000) {
-    digitalWrite(23, LOW);
-    digitalWrite(22, HIGH);
-    digitalWrite(21, LOW);
+    digitalWrite(actProfile.amberLED.pin, LOW);
+    digitalWrite(actProfile.redLED.pin, HIGH);
+    digitalWrite(actProfile.fan.pin, LOW);
   }
   else {
-    digitalWrite(23, LOW);
-    digitalWrite(22, LOW);
-    digitalWrite(21, HIGH);
+    digitalWrite(actProfile.amberLED.pin, LOW);
+    digitalWrite(actProfile.redLED.pin, LOW);
+    digitalWrite(actProfile.fan.pin, HIGH);
     Serial.println("Warning!!!");
   }
 }
@@ -44,7 +44,7 @@ void readCO2PPM(char* topic, byte* message, unsigned int length) {
 void setup() {
   Serial.begin(9600);
   Serial.println("Initialization starts");
-  if(actProfile.begin(ACTCONFILE, Serial)) {
+  if(!actProfile.begin(ACTCONFILE, Serial)) {
     Serial.printf(
       "Actuator profile cannot be opened from file: %s\n", 
       ACTCONFILE
@@ -52,9 +52,10 @@ void setup() {
     while(true);
   }
   Serial.println("Actuator profile OK");
-  pinMode(23, OUTPUT);
-  pinMode(22, OUTPUT);
-  pinMode(21, OUTPUT);
+  pinMode(actProfile.amberLED.pin, actProfile.amberLED.mode);
+  pinMode(actProfile.redLED.pin, actProfile.redLED.mode);
+  pinMode(actProfile.fan.pin, actProfile.fan.mode);
+  Serial.printf("amberLED: %i, redLED: %i, fan: %i\n", actProfile.amberLED.pin, actProfile.redLED.pin, actProfile.fan.pin);
   if (!nProfile.begin(NETWCONFILE, Serial)) {
     Serial.printf(
       "Network profile cannot be opened from file: %s\n", 

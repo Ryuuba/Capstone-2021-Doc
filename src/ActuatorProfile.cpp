@@ -13,10 +13,10 @@ bool ActuatorProfile::begin(const char* filename, HardwareSerial& serial) {
         JsonObject amberLEDProfile = doc["amberLED"];
         amberLED.pin = amberLEDProfile["pin"];
         amberLED.mode = amberLEDProfile["mode"];
-        JsonObject redLEDProfile = doc["amberLED"];
+        JsonObject redLEDProfile = doc["redLED"];
         redLED.pin = redLEDProfile["pin"];
         redLED.mode = redLEDProfile["mode"];
-        JsonObject fanProfile = doc["amberLED"];
+        JsonObject fanProfile = doc["fan"];
         fan.pin = fanProfile["pin"];
         fan.mode = fanProfile["mode"];
         success = true;
