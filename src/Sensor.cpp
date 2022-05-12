@@ -26,6 +26,7 @@ bool ledStatus;
 unsigned long seconds = 1000L; //Notice the L 
 unsigned long minutes;
 Adafruit_AHTX0 aht;
+IPAddress mqttServerAddress;
 
 void setup()
 {
@@ -78,8 +79,8 @@ void setup()
   wifi = new WiFiSetup(nProfile.wifi.ssid, nProfile.wifi.passwd);
   wifi->begin(Serial);;
   mdns_init ();// Add
-  IPAddress ipaddr = MDNS.queryHost(nProfile.mqttConn.broker_addr);// .local omitted
-  client.setServer(ipaddr, nProfile.mqttConn.port);
+  mqttServerAddress = MDNS.queryHost(nProfile.mqttConn.broker_addr);
+  client.setServer(mqttServerAddress, nProfile.mqttConn.port);
   client.connect(nProfile.mqttConn.id);
   minutes = sProfile.delay * seconds;
 }
@@ -104,7 +105,7 @@ void loop()
   oled->printf("CO2 measurement: %i\n", CO2);
   oled->printf("Temperature: %0.1f C\n", temp.temperature);
   oled->printf("Hum: %0.01f RH\n", humidity.relative_humidity);
-  //oled->printf("Status: %s\n", cm1107->getStatus().c_str());
+  oled->printf("MQTT Server:\n%s\n", mqttServerAddress.toString().c_str());
   oled->display();
   if (!client.connected())
   {
