@@ -32,11 +32,6 @@ void setup()
   Serial.begin(9600);
   SensorProfile sProfile;
   Wire.begin(SDA, SCL, sProfile.i2cFreq);
-  if (aht.begin(&Wire)) {
-    Serial.println("Found AHT20");
-  } else {
-    Serial.println("AHT20 couldn't be connected");
-  } 
   if (!sProfile.begin(SENSORCONFILE, Serial)) {
     Serial.printf(
       "Sensor profile cannot be opened from file: %s\n", 
@@ -60,6 +55,10 @@ void setup()
   cm1107->begin(Wire, sProfile.co2Sensor.model);
   cm1107->printSerialNumber(Serial);
   cm1107->printSoftwareVersion(Serial);
+  if (aht.begin())
+    Serial.println("Found AHT20");
+  else
+    Serial.println("AHT20 couldn't be connected");
   button = sProfile.button.pin;
   pinMode(button, sProfile.button.mode);
   if (digitalRead(button) == LOW) {
@@ -101,9 +100,9 @@ void loop()
   oled->setTextSize(1);
   //oled->printf("Frame: %s\n", cm1107->getPrintableDataFrame().c_str());
   oled->printf("CO2 measurement: %i\n", CO2);
-  oled->printf("Temperature: %0.1f C degrees\n", temp.temperature);
+  oled->printf("Temperature: %0.1f C\n", temp.temperature);
   oled->printf("Hum: %0.01f RH\n", humidity.relative_humidity);
-  oled->printf("Status: %s\n", cm1107->getStatus().c_str());
+  //oled->printf("Status: %s\n", cm1107->getStatus().c_str());
   oled->display();
   if (!client.connected())
   {

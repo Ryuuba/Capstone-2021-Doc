@@ -2,13 +2,13 @@
     "profile":"default",
     "WiFi":
     {
-        "SSID":"labred",
-        "passwd":"labred2017"
+        "SSID":"Ryuuba",
+        "passwd":"xoloitzcuintle"
     },
     "MQTT":
     {
-        "id":"botActuator",
-        "broker":"172.30.5.41",
+        "id":"UAMoteC722",
+        "broker":"192.168.1.66",
         "port":1883,
         "topics":
         {
@@ -23,7 +23,7 @@
                 "QoS":0
             },
             "humidity":{
-                "topic":"esp32/bot1/hum/%",
+                "topic":"esp32/bot1/hum/RH",
                 "QoS":0
             }
         }
