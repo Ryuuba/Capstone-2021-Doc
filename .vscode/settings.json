@@ -9,5 +9,8 @@
     "[python]": {
       "editor.wordWrap": "wordWrapColumn",
       "editor.tabSize": 4
+  },
+  "files.associations": {
+    "typeinfo": "cpp"
   }
 }

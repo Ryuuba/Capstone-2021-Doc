@@ -1,5 +1,5 @@
 #include <Arduino.h>
-
+#include<ESPmDNS.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -76,8 +76,10 @@ void setup()
     while(true);
   }
   wifi = new WiFiSetup(nProfile.wifi.ssid, nProfile.wifi.passwd);
-  wifi->begin(Serial);
-  client.setServer(nProfile.mqttConn.broker_addr, nProfile.mqttConn.port);
+  wifi->begin(Serial);;
+  mdns_init ();// Add
+  IPAddress ipaddr = MDNS.queryHost(nProfile.mqttConn.broker_addr);// .local omitted
+  client.setServer(ipaddr, nProfile.mqttConn.port);
   client.connect(nProfile.mqttConn.id);
   minutes = sProfile.delay * seconds;
 }
