@@ -4,6 +4,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include <PubSubClient.h>
+#include <Adafruit_AHTX0.h>
 #include "CO2Sensor.h"
 #include "WiFiSetup.h"
 #include "SensorProfile.h"
@@ -24,12 +25,18 @@ uint8_t led;
 bool ledStatus;
 unsigned long seconds = 1000L; //Notice the L 
 unsigned long minutes;
+Adafruit_AHTX0 aht;
 
 void setup()
 {
   Serial.begin(9600);
   SensorProfile sProfile;
   Wire.begin(SDA, SCL, sProfile.i2cFreq);
+  if (aht.begin(&Wire)) {
+    Serial.println("Found AHT20");
+  } else {
+    Serial.println("AHT20 couldn't be connected");
+  } 
   if (!sProfile.begin(SENSORCONFILE, Serial)) {
     Serial.printf(
       "Sensor profile cannot be opened from file: %s\n", 
@@ -78,6 +85,10 @@ void setup()
 
 void loop()
 {
+  sensors_event_t humidity, temp;
+  aht.getEvent(&humidity, &temp);
+  Serial.printf("Temperature: %0.1f C degrees\n", temp.temperature);
+  Serial.printf("Hum: %0.01f RH\n", humidity.relative_humidity);
   uint16_t CO2 = cm1107->read();
   cm1107->printDataFrame(Serial);
   cm1107->printCO2Measurement(Serial);
@@ -86,10 +97,12 @@ void loop()
   oled->setTextSize(2);
   oled->setTextColor(SSD1306_WHITE);
   oled->setCursor(0, 0);
-  oled->printf("CO2 sensor status\n");
+  oled->printf("UAMote\n");
   oled->setTextSize(1);
-  oled->printf("Frame: %s\n", cm1107->getPrintableDataFrame().c_str());
+  //oled->printf("Frame: %s\n", cm1107->getPrintableDataFrame().c_str());
   oled->printf("CO2 measurement: %i\n", CO2);
+  oled->printf("Temperature: %0.1f C degrees\n", temp.temperature);
+  oled->printf("Hum: %0.01f RH\n", humidity.relative_humidity);
   oled->printf("Status: %s\n", cm1107->getStatus().c_str());
   oled->display();
   if (!client.connected())
