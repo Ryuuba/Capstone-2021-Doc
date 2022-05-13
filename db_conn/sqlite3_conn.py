@@ -13,14 +13,14 @@ def create_connection(db_path: str) -> sqlite3.Connection:
         print(e)
     return db_conn
 
-def insert_tuple(db_conn: sqlite3.Connection, reading: Tuple[str, str, int]):
+def insert_tuple(db_conn: sqlite3.Connection, table: str, reading: Tuple[str, str, None]):
     """
     Inserts a tuple <time, location, reading> into a database
     @param db_conn An initialized sqlite3 database connector
     @param reading The tuple to be inserted into the connected database
     @returns The ID of the inserted row
     """
-    order = '''INSERT INTO readings(date, location, reading) VALUES(?,?,?) '''
+    order = '''INSERT INTO {}(date, location, reading) VALUES(?,?,?) '''.format(table)
     cursor = db_conn.cursor()
     cursor.execute(order, reading)
     db_conn.commit()
@@ -29,14 +29,14 @@ def insert_tuple(db_conn: sqlite3.Connection, reading: Tuple[str, str, int]):
     last_row = cursor.lastrowid
     return last_row
 
-def read_tuple(db_conn: sqlite3.Connection, row_id: int) -> Tuple[str, str, int]:
+def read_tuple(db_conn: sqlite3.Connection, table: str, row_id: int) -> Tuple[str, str, None]:
     """
     Returns a register from the database
     @param db_conn An initialized sqlite3 database connector
     @param row_id The ID of the row to be read
     @returns A tuple <date, location, reading> from the connected database
     """
-    query = '''SELECT * FROM readings WHERE ROWID={} '''.format(row_id)
+    query = '''SELECT * FROM {} WHERE ROWID={} '''.format(table, row_id)
     cursor = db_conn.cursor()
     cursor.execute(query)
     data_tuple = (
@@ -58,7 +58,7 @@ def get_last_data(db_conn: sqlite3.Connection,  size: int) -> list:
     cursor.execute(query)
     return cursor.fetchall()
 
-def get_last_data(db_conn: sqlite3.Connection,  size: int, location: str) -> list:
+def get_last_data(db_conn: sqlite3.Connection, size: int, location: str) -> list:
     """
     Queries the readings in [a_row, b_row] interval
     @param db_conn An initialized sqlite3 database connector

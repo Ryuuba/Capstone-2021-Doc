@@ -40,14 +40,32 @@ def on_message(client, userdata, msg):
     @note client and userdata are given by the MQTT API
     """
     print(msg.topic + ' ' + str(msg.payload, encoding='UTF8'))
-    print(msg.topic.split('/'))
-    data_tuple = (
-        str(int(time())),                      # The current time (UNIX format)
-        msg.topic.split('/')[1],               # The sensor location
-        int(str(msg.payload, encoding='UTF8')) # The sensor reading
-    )
+    topic_struct = msg.topic.split('/')
+    print(topic_struct)
+    table = ''
+    if topic_struct[2] == 'CO2':
+        data_tuple = (
+            str(int(time())),                      # The current time (UNIX format)
+            msg.topic.split('/')[1],               # The sensor location
+            int(str(msg.payload, encoding='UTF8')) # The sensor reading
+        )
+        table = 'co2reading'
+    elif topic_struct[2] == 'temp':
+        data_tuple = (
+            str(int(time())),                        # The current time (UNIX format)
+            msg.topic.split('/')[1],                 # The sensor location
+            float(str(msg.payload, encoding='UTF8')) # The sensor reading
+        )
+        table = 'tempreading'
+    elif topic_struct[2] == 'hum':
+        data_tuple = (
+            str(int(time())),                        # The current time (UNIX format)
+            msg.topic.split('/')[1],                 # The sensor location
+            float(str(msg.payload, encoding='UTF8')) # The sensor reading
+        )
+        table = 'humreading'
     print('Data tuple {} is saved into {}'.format(data_tuple, db_path))
-    sqlite3_conn.insert_tuple(db_conn, data_tuple)
+    sqlite3_conn.insert_tuple(db_conn, table, data_tuple)
 
 def main():
     client = mqtt.Client(client_id)
