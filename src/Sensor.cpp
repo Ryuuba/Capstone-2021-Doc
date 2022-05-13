@@ -87,6 +87,8 @@ void setup()
 
 void loop()
 {
+  char temp_reading[5];
+  char hum_reading[5];
   sensors_event_t humidity, temp;
   aht.getEvent(&humidity, &temp);
   Serial.printf("Temperature: %0.1f C degrees\n", temp.temperature);
@@ -115,7 +117,10 @@ void loop()
   else
   {
     client.loop();
+
     client.publish(nProfile.co2.topic, cm1107->getCO2().c_str());
+    client.publish(nProfile.temp.topic, dtostrf(temp.temperature, 3, 1, temp_reading));
+    client.publish(nProfile.humidity.topic, dtostrf(humidity.relative_humidity, 3, 1, hum_reading));
   }
   ledStatus = !ledStatus;
   digitalWrite(led, ledStatus);
