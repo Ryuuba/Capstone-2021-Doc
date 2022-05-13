@@ -1,112 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Lecturas de niveles de concentración de CO2</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <style>
-            * {
-              box-sizing: border-box;
-            }
-            .charts:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-            .chart {
-                float: left;
-                width: 50%;
-                padding: 10px;
-            } 
-            @media screen and (max-width: 1024px) {
-                .chart {
-                    width: 100%;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Niveles de concentración de CO2</h1>
-        <p>Esta página muestra los niveles de concentración de CO2 de la oficina C722 y el Laboratorio de Redes mediante una gráfica que se actualiza cada 5 minutos. En cada gráfica, el eje de las abscisas muestra el tiempo en el que se toma cada lectura, mientras que el eje de las ordenadas indica el nivel de CO2 del área medida en millones de partículas por millón [ppm].</p>
-        <div class="charts">
-            <div class="chart">
-                <h2>Oficina C722</h2>
-                <p>
-                    <canvas id="lineChartC722" width="512" height="288"></canvas>
-                </p>
-            </div>
-            <div class="chart">
-                <h2>Laboratorio de redes</h2>
-                <p>
-                    <canvas id="lineChartLabRedes" width="512" height="288"></canvas>
-                </p>
-            </div>
-        </div>
-        <script>
-            var c722Ctx = document.getElementById("lineChartC722").getContext("2d");
-            var labRedCtx = document.getElementById("lineChartLabRedes").getContext("2d");
-            const C722Config = {
-                type: "line",
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: "",
-                            data: [],
-                            fill: true,
-                            borderColor: "",
-                            lineTension: 0.1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: false
-                }
-            };
-            const LabRedConfig = {
-                type: "line",
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: "",
-                            data: [],
-                            fill: true,
-                            borderColor: "",
-                            lineTension: 0.1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: false
-                }
-            };
-            const c722Chart = new Chart(c722Ctx, C722Config);
-            const labRedChart = new Chart(labRedCtx, LabRedConfig);
-            const source = new EventSource("/chart-data");
-            source.onmessage = function (event) {
-                const data = JSON.parse(event.data);
-                if (C722Config.data.labels.length === 10) {
-                    C722Config.data.labels.shift();
-                    C722Config.data.datasets[0].data.shift();
-                }
-                C722Config.data.datasets[0].label=data.C722title;
-                C722Config.data.datasets[0].borderColor=data.C722color;
-                C722Config.data.labels.push(data.C722time);
-                C722Config.data.datasets[0].data.push(data.C722value);
-                c722Chart.update();
-                if (LabRedConfig.data.labels.length === 10) {
-                    LabRedConfig.data.labels.shift();
-                    LabRedConfig.data.datasets[0].data.shift();
-                }
-                LabRedConfig.data.datasets[0].label=data.LabRedtitle;
-                LabRedConfig.data.datasets[0].borderColor=data.LabRedcolor;
-                LabRedConfig.data.labels.push(data.LabRedtime);
-                LabRedConfig.data.datasets[0].data.push(data.LabRedvalue);
-                labRedChart.update();
-            }
-        </script>
-    </body>
+<meta charset="UTF-8">
+<head>
+    <title>Lecturas de variables ambientales de la UAM-Cuajimalpa</title>
+</head>
+<body>
+
+<h1>Red de sensores inalámbricos de la UAM-Cuajimalpa</h1>
+
+<p>Selecciona el área que deseas monitorear:</p>
+<p><a href="c722plot" target="_blank" rel="noopener noreferrer">C722</a>.</p>
+<p><a href="labredplot" target="_blank" rel="noopener noreferrer">LabRed</a>.</p>
+
+</body>
 </html>

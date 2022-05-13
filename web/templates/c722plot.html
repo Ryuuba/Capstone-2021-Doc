@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lecturas de niveles de concentración de CO2</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <style>
+            * {
+              box-sizing: border-box;
+            }
+            .charts:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            .chart {
+                float: left;
+                width: 33%;
+                padding: 10px;
+            } 
+            @media screen and (max-width: 1024px) {
+                .chart {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>C722</h1>
+        <p>Esta página muestra los niveles de concentración de CO2, la temperatura y el nivel de humedad relativa de la oficina C722 mediante una gráfica que se actualiza cada 30 segundos. En cada gráfica, el eje de las abscisas muestra el tiempo en el que se toma cada lectura, mientras que el eje de las ordenadas indica la magnitud de la señal.</p>
+        <div class="charts">
+            <div class="chart">
+                <h2>Nivel de CO2</h2>
+                <p>
+                    <canvas id="lineChartC722CO2" width="340" height="191"></canvas>
+                </p>
+            </div>
+            <div class="chart">
+                <h2>Temperatura</h2>
+                <p>
+                    <canvas id="lineChartC722Temp" width="340" height="191"></canvas>
+                </p>
+            </div>
+            <div class="chart">
+                <h2>Humedad</h2>
+                <p>
+                    <canvas id="lineChartC722Hum" width="340" height="191"></canvas>
+                </p>
+            </div>
+        </div>
+        <script>
+            var c722CO2Ctx = document.getElementById("lineChartC722CO2").getContext("2d");
+            var c722TempCtx = document.getElementById("lineChartC722Temp").getContext("2d");
+            var c722HumCtx = document.getElementById("lineChartC722Hum").getContext("2d");
+            const C722CO2Config = {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "",
+                            data: [],
+                            fill: true,
+                            borderColor: "",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false
+                }
+            };
+            const C722TempConfig = {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "",
+                            data: [],
+                            fill: true,
+                            borderColor: "",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false
+                }
+	    };
+            const C722HumConfig = {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "",
+                            data: [],
+                            fill: true,
+                            borderColor: "",
+                            lineTension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false
+                }
+	    };
+            const c722CO2Chart = new Chart(c722CO2Ctx, C722CO2Config);
+            const c722TempChart = new Chart(c722TempCtx, C722TempConfig);
+            const c722HumChart = new Chart(c722HumCtx, C722HumConfig);
+            const source = new EventSource("/chart-data");
+            source.onmessage = function (event) {
+                const data = JSON.parse(event.data);
+                if (C722CO2Config.data.labels.length === 10) {
+                    C722CO2Config.data.labels.shift();
+                    C722CO2Config.data.datasets[0].data.shift();
+                }
+                C722CO2Config.data.datasets[0].label=data.C722CO2title;
+                C722CO2Config.data.datasets[0].borderColor=data.C722CO2color;
+                C722CO2Config.data.labels.push(data.C722CO2time);
+                C722CO2Config.data.datasets[0].data.push(data.C722CO2value);
+                c722CO2Chart.update();
+                if (C722TempConfig.data.labels.length === 10) {
+                    C722TempConfig.data.labels.shift();
+                    C722TempConfig.data.datasets[0].data.shift();
+                }
+                C722TempConfig.data.datasets[0].label=data.C722Temptitle;
+                C722TempConfig.data.datasets[0].borderColor=data.C722Tempcolor;
+                C722TempConfig.data.labels.push(data.C722Temptime);
+                C722TempConfig.data.datasets[0].data.push(data.C722Tempvalue);
+                c722TempChart.update();
+                if (C722HumConfig.data.labels.length === 10) {
+                    C722HumConfig.data.labels.shift();
+                    C722HumConfig.data.datasets[0].data.shift();
+                }
+                C722HumConfig.data.datasets[0].label=data.C722Humtitle;
+                C722HumConfig.data.datasets[0].borderColor=data.C722Humcolor;
+                C722HumConfig.data.labels.push(data.C722Humtime);
+                C722HumConfig.data.datasets[0].data.push(data.C722Humvalue);
+                c722HumChart.update();
+            }
+        </script>
+    </body>
+</html>
+
